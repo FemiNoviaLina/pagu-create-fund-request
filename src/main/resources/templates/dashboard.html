@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Pagu - Dashboard</title>
+  <link rel="icon" type="image/x-icon" th:href="@{/img/pagu.ico}">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous"
+  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      font-family: "Inter", Arial, sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <div class="container my-5">
+    <div class="d-flex flex-row">
+      <img th:src="@{/img/pagu.png}" class="img-fluid mr-3" style="height:40px; width:auto;">
+      <h1 class="align-middle">Pagu</h1>
+    </div>
+    <hr>
+    <a th:href="@{/new/pengajuan}">
+      <button type="button" class="btn btn-outline-dark">+ Tambah Pengajuan</button>
+    </a>
+    <div th:if="${error}" th:text="${error}" class="alert alert-danger mt-3" role="alert">
+      This is a danger alert—check it out!
+    </div>
+    <div  th:each="pengajuan : ${pengajuanDana}" class="list-group my-3">
+      <a th:href="@{'/pengajuan/' + ${pengajuan.nomor}}" class="list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-between">
+          <h5  th:text="${pengajuan.judul}" class="mb-1"></h5>
+          <small th:text="'Tanggal Pengajuan : ' + ${#dates.format(pengajuan.createdAt, 'dd-MM-yyyy')}"></small>
+        </div>
+        <p th:text="${pengajuan.deskripsi}" class="mb-1"></p>
+        <small th:text="'Jumlah pengajuan : Rp. ' + ${#aggregates.sum(pengajuan.itemAnggaran.![harga * jumlah])}"></small>
+      </a>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+</body>
+</html>
